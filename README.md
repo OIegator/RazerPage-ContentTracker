@@ -1,3 +1,3 @@
 # ContentTracker
 
-![ERD image](ERD ContentTracker.png)
+![ERD image](ERD%20ContentTracker.png)
