@@ -25,27 +25,27 @@ namespace ContentTracker.Pages
         }
 
         [BindProperty]
-        public string GameName { get; set; }
+        public string? GameName { get; set; }
 
         [BindProperty]
-        public string SelectedMonth { get; set; }
+        public string? SelectedMonth { get; set; }
 
-        public Game Game { get; set; }
-        public List<Game> Games { get; set; }
+        public Game? Game { get; set; }
+        public List<Game>? Games { get; set; }
 
-        public List<User> Users { get; set; }
+        public List<User>? Users { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
-            string userId = _userManager.GetUserId(User);
+            string userId = _userManager.GetUserId(User)!;
 
             Users = await _dbContext.Users
-                .Include(u => u.UserGames)
+                .Include(u => u.UserGames!)
                 .ThenInclude(ug => ug.Game)
                 .Where(u => u.Id == userId)
                 .ToListAsync();
 
-            Games = Users.SelectMany(u => u.UserGames)
-                .Select(ug => ug.Game)
+            Games = Users.SelectMany(u => u.UserGames!)
+                .Select(ug => ug.Game!)
                 .ToList();
 
             return Page();
@@ -74,22 +74,22 @@ namespace ContentTracker.Pages
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 Game = JsonConvert.DeserializeObject<Game>(jsonResponse);
-                string userId = _userManager.GetUserId(User);
+                string userId = _userManager.GetUserId(User)!;
 
-                User user = await _dbContext.Users
+                User? user = await _dbContext.Users
                     .Include(u => u.UserGames)
                     .FirstOrDefaultAsync(u => u.Id == userId);
 
                 if (user != null)
                 {
                     // ѕровер€ем, существует ли игра в базе данных
-                    Game existingGame = await _dbContext.Games
-                        .FirstOrDefaultAsync(g => g.Name == Game.Name);
+                    Game? existingGame = await _dbContext.Games
+                        .FirstOrDefaultAsync(g => g.Name == Game!.Name);
 
                     if (existingGame == null)
                     {
                         // »гра не существует, добавл€ем ее в базу данных
-                        _dbContext.Games.Add(Game);
+                        _dbContext.Games.Add(Game!);
                         await _dbContext.SaveChangesAsync();
                     }
                     else

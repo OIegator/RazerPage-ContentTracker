@@ -9,9 +9,9 @@ namespace ContentTracker.Models
         [Key]
         [JsonIgnore]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string background_image { get; set; }
-        public ICollection<UserGame> UserGames { get; set; }
+        public string? Name { get; set; }
+        public string? Background_image { get; set; }
+        public ICollection<UserGame>? UserGames { get; set; }
     }
 
 }

@@ -5,6 +5,6 @@ namespace ContentTracker.Models
 {
     public class User : IdentityUser
     {
-        public ICollection<UserGame> UserGames { get; set; }
+        public ICollection<UserGame>? UserGames { get; set; }
     }
 }
