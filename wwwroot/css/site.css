@@ -1,0 +1,193 @@
+@font-face {
+    font-family: Roboto-Bold;
+    src: url('../fonts/roboto/Roboto-Bold.ttf');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+
+body {
+    margin-bottom: 60px;
+    background: #212121;
+}
+
+.navbar-brand {
+    color: aliceblue;
+    font-family: Roboto-Bold
+}
+
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container form {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.form-container input,
+.form-container select {
+    min-width: 10em;
+    position: relative;
+    padding: 0.9em;
+    margin: 0.3em;
+    border-radius: 0.5em;
+    font-family: Roboto-Bold, serif;
+    background-color: #343434;
+    color: #f2f2f2;
+    border: 0;
+}
+
+.form-container select {
+    padding: 1em;
+}
+
+.form-container .dropdown {
+    min-width: 10em;
+    position: relative;
+}
+
+.form-container .dropdown * {
+    box-sizing: border-box;
+}
+
+.form-container .btn {
+    padding: 0.9em;
+    background-color: #343434;
+    font-family: Roboto-Bold, serif;
+    border-radius: 0.5em;
+    border: 0;
+    margin: 0.3em;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.poster {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 25%;
+    padding: 0;
+    margin: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.83), 0 4px 15px 0 rgba(10, 1, 1, 0.69);
+}
+
+.poster img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+
+.poster .details {
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.9) 70%);
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: 0.4s;
+    transition-property: opacity, transform;
+}
+
+.poster .details h2 {
+    position: absolute;
+    padding: 20px;
+    text-align: center;
+    bottom: 0;
+    color: rgba(255,255,255,0.9);
+    font-family: Roboto-Bold, serif;
+}
+
+.poster:hover .details {
+    opacity: 1;
+}
+
+.poster:hover {
+    transform: scale(1.2);
+}
+
+.email-form label {
+    color: aliceblue;
+    font-family: Roboto-Bold;
+    font-size: 16pt;
+}
+
+.pass-form label {
+    color: aliceblue;
+    font-family: Roboto-Bold;
+    font-size: 16pt;
+}
+
+
+.pass-form input {
+    min-width: 10em;
+    position: relative;
+    padding: 0.9em;
+    margin: 0.3em;
+    border-radius: 0.5em;
+    font-family: Roboto-Bold, serif;
+    background-color: #343434;
+    color: #f2f2f2;
+    border: 0;
+}
+
+
+.email-form input {
+    min-width: 10em;
+    position: relative;
+    padding: 0.9em;
+    margin: 0.3em;
+    border-radius: 0.5em;
+    font-family: Roboto-Bold, serif;
+    background-color: #343434;
+    color: #f2f2f2;
+    border: 0;
+}
+
+
+.btn {
+    padding: 1em;
+    background-color: #343434;
+    font-family: Roboto-Bold, serif;
+    border-radius: 0.5em;
+    border: 0;
+    min-width: 6em;
+    color: rgba(255, 255, 255, 0.9);
+}

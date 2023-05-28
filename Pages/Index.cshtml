@@ -1,0 +1,39 @@
+﻿@page
+@model ContentTracker.Pages.GamesModel
+@{
+    ViewData["Title"] = "Games";
+}
+<div class="form-container">
+    <form method="post">
+        <input type="text" id="gameName" name="GameName" asp-for="GameName" />
+        <div class="dropdown">
+            <select id="selectedMonth" name="SelectedMonth" asp-for="SelectedMonth">
+                <option value="January">January</option>
+                <option value="Fedruary">Fedruary</option>
+            </select>
+        </div>
+        <button type="submit" class="btn">ADD GAME</button>
+    </form>
+
+    <form method="post" asp-page-handler="Logout" style="margin-left: auto;">
+        <button type="submit" class="btn">Logout</button>
+    </form>
+</div>
+
+
+@if (Model.Games != null && Model.Games.Count > 0)
+{
+    <div class="row">
+        @foreach (var game in Model.Games)
+        {
+            <div class="poster">
+                <img src="@game.background_image" alt="@game.Name" />
+                <div class="details">
+                    <h2>@game.Name</h2>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
