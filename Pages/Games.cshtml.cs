@@ -12,16 +12,18 @@ namespace ContentTracker.Pages
     [Authorize]
     public class GamesModel : PageModel
     {
+        private readonly IConfiguration _configuration;
         private readonly AppDbContext _dbContext;
         private readonly HttpClient _httpClient;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public GamesModel(HttpClient httpClient, AppDbContext dbContext, UserManager<User> userManager, SignInManager<User> signInManager)
+        public GamesModel(HttpClient httpClient, AppDbContext dbContext, UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _httpClient = httpClient;
             _dbContext = dbContext;
             _signInManager = signInManager;
+            _configuration = configuration;
         }
 
         [BindProperty]
@@ -66,7 +68,7 @@ namespace ContentTracker.Pages
                 return Page();
             }
 
-            string apiKey = "c593f58019084152a8f8bd09c3c88048";
+            string apiKey = _configuration["ApiKey"];
             string apiUrl = $"https://api.rawg.io/api/games/{GameName}?key={apiKey}";
 
             HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
@@ -74,22 +76,22 @@ namespace ContentTracker.Pages
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 Game = JsonConvert.DeserializeObject<Game>(jsonResponse);
-                string userId = _userManager.GetUserId(User)!;
+                string userId = _userManager.GetUserId(User);
 
-                User? user = await _dbContext.Users
+                User user = await _dbContext.Users
                     .Include(u => u.UserGames)
                     .FirstOrDefaultAsync(u => u.Id == userId);
 
                 if (user != null)
                 {
                     // Проверяем, существует ли игра в базе данных
-                    Game? existingGame = await _dbContext.Games
-                        .FirstOrDefaultAsync(g => g.Name == Game!.Name);
+                    Game existingGame = await _dbContext.Games
+                        .FirstOrDefaultAsync(g => g.Name == Game.Name);
 
                     if (existingGame == null)
                     {
                         // Игра не существует, добавляем ее в базу данных
-                        _dbContext.Games.Add(Game!);
+                        _dbContext.Games.Add(Game);
                         await _dbContext.SaveChangesAsync();
                     }
                     else
@@ -101,7 +103,8 @@ namespace ContentTracker.Pages
                     UserGame userGame = new UserGame
                     {
                         User = user,
-                        Game = Game
+                        Game = Game,
+                        Month = SelectedMonth // Сохраняем выбранный месяц для игры
                     };
 
                     // Добавляем связь пользователя и игры в базу данных
@@ -116,6 +119,7 @@ namespace ContentTracker.Pages
 
             return RedirectToPage("/Games");
         }
+
 
     }
 }

@@ -37,10 +37,17 @@ namespace ContentTracker
                 app.UseHsts();
             }
 
+            app.MapControllerRoute(
+                name: "usergames",
+                pattern: "{username}",
+                defaults: new { controller = "UserGames", action = "Index" });
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+
 
             app.UseAuthentication();
             app.UseAuthorization();

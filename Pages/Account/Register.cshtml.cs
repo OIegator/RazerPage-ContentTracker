@@ -25,8 +25,16 @@ namespace ContentTracker.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var userExists = await _userManager.FindByNameAsync(Input.Username);
+                if (userExists != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Username is already taken.");
+                    return Page();
+                }
+
+                var user = new User { UserName = Input.Username, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
                     // Пользователь успешно зарегистрирован
@@ -44,6 +52,7 @@ namespace ContentTracker.Pages.Account
             // Если произошла ошибка, отобразить форму регистрации с ошибками
             return Page();
         }
+
 
     }
 
